@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { marked } from 'marked'
-  import { ref, onMounted, watchEffect } from 'vue'
+  import { ref, onMounted } from 'vue'
   import { useMessage, NCard, NTabs, NTabPane, NInput, NSkeleton, NFloatButton, NIcon } from 'naive-ui'
   import { Reload } from '@vicons/ionicons5'
   import hljs from 'highlight.js'
@@ -26,7 +26,8 @@
   }
 
   function request() {
-    fetch('http://localhost:5000/prompt', {
+    setTimeout(() => curTab.value = '回答', 400)
+    fetch('/prompt', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -39,12 +40,12 @@
       const reader = resp.body.getReader()
       const decoder = new TextDecoder()
 
-      loading.value = false
       while (true) {
         const { done, value } = await reader.read()
         if (done) {
           const blocks = document.querySelectorAll('pre code')
           blocks.forEach((block) => hljs.highlightBlock(block as HTMLElement))
+          loading.value = false
           break
         }
         const chunkText = decoder.decode(value)
@@ -52,12 +53,6 @@
       }
     })
   }
-
-  watchEffect(() => {
-    if (loading.value) {
-      curTab.value = '回答'
-    }
-  })
 
   onMounted(() => request())
 </script>
@@ -72,7 +67,7 @@
         </NFloatButton>
       </NTabPane>
       <NTabPane name="回答">
-        <NSkeleton v-if="loading" text :repeat=1 />
+        <NSkeleton v-if="output === ''" text :repeat=2 />
         <div v-else v-html="marked(output)" />
       </NTabPane>
     </NTabs>
