@@ -1,5 +1,6 @@
 <script setup lang="ts">
-  import { NGrid, NGridItem, NFlex, NImage, NTag, NGradientText } from 'naive-ui'
+  import { NGrid, NGridItem, NFlex, NImage, NButton, NIcon, NGradientText } from 'naive-ui'
+  import { SettingsOutline } from '@vicons/ionicons5'
 </script>
 
 <template>
@@ -7,7 +8,11 @@
     <NGridItem>
       <NFlex justify="space-between" align="center" :wrap=false>
         <NImage style="border-radius: 4px;" height="64px" width="64px" src="static/avatar.jpg" preview-disabled />
-        <NTag type="info" round :bordered=false>Q&A</NTag>
+        <NButton quaternary>
+          <template #icon>
+            <NIcon><SettingsOutline /></NIcon>
+          </template>
+        </NButton>
       </NFlex>
     </NGridItem>
     <NGridItem>
