@@ -9,6 +9,7 @@
   const emit = defineEmits(['response'])
   const props = defineProps({ content: String })
 
+  const message = useMessage()
   const output = ref('')
 
   const loading = ref(true)
@@ -17,7 +18,7 @@
 
   function regen() {
     loading.value = true
-    useMessage().loading(
+    message.loading(
       '重新生成回答...', 
       { closable: true }
     )
@@ -51,6 +52,14 @@
         const chunkText = decoder.decode(value)
         output.value += chunkText
       }
+    }).catch(err => {
+      console.error(err)
+      if (output.value === '') {
+        output.value = '请求异常，请重试'
+      } else {
+        message.error('请求异常')
+      }
+      loading.value = true
     })
   }
 
