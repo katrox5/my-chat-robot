@@ -13,7 +13,7 @@
 
   const model = ref({
     temperature: 70,
-    penaltyScore: 40,
+    penaltyScore: 0,
   })
 
   const tooltip = (value: number) => (value / 100).toFixed(2)
@@ -78,7 +78,7 @@
                   <div>对已生成的token增加惩罚，减少重复生成的现象。</div>
                   <div>说明：</div>
                   <div>（1）值越大表示惩罚越大</div>
-                  <div>（2）默认1.4，取值范围：[1.0, 2.0]</div>
+                  <div>（2）默认1.0，取值范围：[1.0, 2.0]</div>
                 </div>
               </NPopover>
               <span>重复惩罚</span>
