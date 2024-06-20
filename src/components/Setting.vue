@@ -38,6 +38,7 @@
     preset="card"
     @after-leave="saveOptions"
     v-model:show="modalVisible"
+    :auto-focus="false"
     style="width: 450px; padding: 0 10px"
   >
     <NSpace vertical>

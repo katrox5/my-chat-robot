@@ -7,7 +7,6 @@
   import 'highlight.js/styles/a11y-light.css'
 
   const message = useMessage()
-  const promptUrl = 'http://localhost:5000/prompt'
 
   const emit = defineEmits(['response'])
   const props = defineProps({
@@ -40,7 +39,7 @@
       content: props.prompt,
     })
 
-    fetch(promptUrl, {
+    fetch('/prompt', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
