@@ -1,16 +1,46 @@
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { onMounted, ref } from 'vue'
   import Card from './Card.vue'
   import Footer from './Footer.vue'
 
-  const prompts = ref<string[]>([])
-  const addPrompt = (prompt: string) => prompts.value.push(prompt)
+  defineExpose({
+    cleanMessages() {
+      localStorage.removeItem('messages')
+      cards.value = []
+    },
+  })
+
+  interface Card {
+    prompt: string
+    answer?: string
+  }
+  const cards = ref<Card[]>([])
+
+  const addPrompt = (prompt: string) => cards.value.push({ prompt })
+
+  function loadMessages() {
+    const messages = JSON.parse(localStorage.getItem('messages') ?? '[]')
+    let prompt
+    for (const msg of messages) {
+      if (msg['role'] == 'user') {
+        prompt = msg['content']
+      } else if (msg['role'] == 'assistant' && prompt) {
+        cards.value.push({
+          prompt,
+          answer: msg['content'],
+        })
+        prompt = undefined
+      }
+    }
+  }
+
+  onMounted(() => loadMessages())
 </script>
 
 <template>
-  <div style="margin-bottom: 2rem;">
-    <template v-for="prompt in prompts">
-      <Card :content="prompt" @response="addPrompt" />
+  <div style="margin-bottom: 2rem">
+    <template v-for="item in cards">
+      <Card :prompt="item.prompt" :answer="item.answer" @response="addPrompt" />
     </template>
   </div>
   <Footer @response="addPrompt" />
