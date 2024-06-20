@@ -16,15 +16,26 @@
       </NFlex>
     </NGridItem>
     <NGridItem>
-      <NGradientText style="font-size: 1.5rem; font-weight: 800;" :gradient="{ from: 'rgb(130, 112, 255)', to: 'rgb(189, 255, 254)', deg: 90 }">
+      <NGradientText class="title" :gradient="{ from: 'rgb(130, 112, 255)', to: 'rgb(189, 255, 254)', deg: 90 }">
         Katrox'&nbsp;
       </NGradientText>
-      <NGradientText style="font-size: 1.5rem; font-weight: 800;" :gradient="{ from: 'rgb(89, 184, 237)', to: 'rgb(50, 146, 109)', deg: 90 }">
+      <NGradientText class="title" :gradient="{ from: 'rgb(89, 184, 237)', to: 'rgb(50, 146, 109)', deg: 90 }">
         Chat Robot
       </NGradientText>
     </NGridItem>
     <NGridItem>
-      <div style="font-size: 1.0rem; color: gray;">基于模型 (ERNIE-Speed-128K).</div>
+      <div class="subtitle">基于模型 (ERNIE-Speed-128K).</div>
     </NGridItem>
   </NGrid>
 </template>
+
+<style scoped>
+.title {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+.subtitle {
+  font-size: 1.0rem;
+  color: gray;
+}
+</style>

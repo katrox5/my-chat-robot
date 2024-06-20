@@ -1,10 +1,12 @@
 <script setup lang="ts">
   import { marked } from 'marked'
   import { ref, onMounted } from 'vue'
-  import { useMessage, NCard, NTabs, NTabPane, NInput, NSkeleton, NFloatButton, NIcon } from 'naive-ui'
+  import { useMessage, NCard, NSkeleton, NFloatButton, NIcon } from 'naive-ui'
   import { Reload } from '@vicons/ionicons5'
   import hljs from 'highlight.js'
   import 'highlight.js/styles/a11y-light.css'
+
+  const promptUrl = 'http://localhost:5000/prompt'
 
   const emit = defineEmits(['response'])
   const props = defineProps({ content: String })
@@ -13,8 +15,6 @@
   const output = ref('')
 
   const loading = ref(true)
-  const curTab = ref('提问')
-  const swtchTab = (value: string) => curTab.value = value
 
   function regen() {
     loading.value = true
@@ -27,8 +27,7 @@
   }
 
   function request() {
-    setTimeout(() => curTab.value = '回答', 400)
-    fetch('/prompt', {
+    fetch(promptUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -45,7 +44,7 @@
         const { done, value } = await reader.read()
         if (done) {
           const blocks = document.querySelectorAll('pre code')
-          blocks.forEach((block) => hljs.highlightBlock(block as HTMLElement))
+          blocks.forEach((block) => hljs.highlightElement(block as HTMLElement))
           loading.value = false
           break
         }
@@ -59,7 +58,7 @@
       } else {
         message.error('请求异常')
       }
-      loading.value = true
+      loading.value = false
     })
   }
 
@@ -67,18 +66,22 @@
 </script>
 
 <template>
-  <NCard content-style="padding-top: 0;" hoverable>
-    <NTabs type="line" size="large" @update:value="swtchTab" :value="curTab" :tabs-padding=20>
-      <NTabPane name="提问">
-        <NInput type="textarea" readonly show-count :value="props.content" :autosize=true :resizable=false />
-        <NFloatButton v-if="!loading" @click="regen" top=10 right=10 width=30 height=30 position="absolute">
-          <NIcon><Reload /></NIcon>
-        </NFloatButton>
-      </NTabPane>
-      <NTabPane name="回答">
-        <NSkeleton v-if="output === ''" text :repeat=2 />
-        <div v-else v-html="marked(output)" />
-      </NTabPane>
-    </NTabs>
+  <NCard style="overflow: hidden;" :segmented="{ content: 'soft' }" hoverable>
+    <template #header>
+      <div class="question">{{ props.content }}</div>
+      <NFloatButton v-if="!loading" @click="regen" top=5 right=5 width=30 height=30 position="absolute">
+        <NIcon><Reload /></NIcon>
+      </NFloatButton>
+    </template>
+    <NSkeleton v-if="output === ''" text :repeat=2 />
+    <div v-else v-html="marked(output)" />
   </NCard>
 </template>
+
+<style scoped>
+.question {
+  font-size: 14px;
+  color: gray;
+  padding-right: 8px;
+}
+</style>
