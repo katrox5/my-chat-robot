@@ -1,11 +1,10 @@
 <script setup lang="ts">
-  import { ref } from 'vue'
-  import { NFlex, NInput, NButton, useMessage } from 'naive-ui'
+  import { useMessage } from 'naive-ui'
 
   const emit = defineEmits(['response'])
   const message = useMessage()
 
-  const inputDom = ref()
+  const inputRef = ref()
   const prompt = ref('')
 
   const input = (value: string) => (prompt.value = value)
@@ -23,14 +22,14 @@
       return
     }
     emit('response', prompt.value.trim())
-    inputDom.value?.clear()
+    inputRef.value?.clear()
   }
 </script>
 
 <template>
   <NFlex justify="space-between" :wrap="false" class="pt-4">
     <NInput
-      ref="inputDom"
+      ref="inputRef"
       @input="input"
       @keydown.enter="enter"
       class="w-85% max-h-40px text-lg"

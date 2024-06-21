@@ -1,7 +1,10 @@
 <script setup lang="ts">
-  import { onMounted, ref } from 'vue'
-  import Card from './Card.vue'
-  import Footer from './Footer.vue'
+  interface Card {
+    prompt: string
+    answer?: string
+  }
+
+  const cards = ref<Card[]>([])
 
   defineExpose({
     cleanMessages() {
@@ -9,12 +12,6 @@
       cards.value = []
     },
   })
-
-  interface Card {
-    prompt: string
-    answer?: string
-  }
-  const cards = ref<Card[]>([])
 
   const addPrompt = (prompt: string) => cards.value.push({ prompt })
 

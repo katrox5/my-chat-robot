@@ -1,18 +1,16 @@
 <script setup lang="ts">
   import { marked } from 'marked'
-  import { ref, onMounted } from 'vue'
-  import { useMessage, NCard, NSkeleton, NFloatButton, NIcon } from 'naive-ui'
   import { Reload } from '@vicons/ionicons5'
+  import { useMessage } from 'naive-ui'
   import hljs from 'highlight.js'
   import 'highlight.js/styles/a11y-light.css'
-
-  const message = useMessage()
 
   const emit = defineEmits(['response'])
   const props = defineProps({
     prompt: String,
     answer: String,
   })
+  const message = useMessage()
 
   const id = ref(-1)
   const output = ref('')
@@ -27,10 +25,9 @@
   }
 
   function request() {
-    const options = localStorage.getItem('options')
-    const json = JSON.parse(options ?? '{}')
-    const temperature: number = (json['temperature'] ?? 70) / 100
-    const penalty_score: number = ((json['penaltyScore'] ?? 0) + 100) / 100
+    const options = JSON.parse(localStorage.getItem('options') ?? '{}')
+    const temperature: number = (options['temperature'] ?? 70) / 100
+    const penalty_score: number = ((options['penaltyScore'] ?? 0) + 100) / 100
     const messages = JSON.parse(localStorage.getItem('messages') ?? '[]')
 
     const prompt = id.value == -1 ? messages : messages.slice(0, id.value - 1)

@@ -1,21 +1,9 @@
 <script setup lang="ts">
-  import { ref } from 'vue'
-  import {
-    NGrid,
-    NGridItem,
-    NFlex,
-    NImage,
-    NButton,
-    NIcon,
-    NGradientText,
-    NPopconfirm,
-  } from 'naive-ui'
   import { SettingsOutline, TrashBinOutline } from '@vicons/ionicons5'
-  import Setting from './Setting.vue'
-
-  const settingModal = ref()
 
   const emit = defineEmits(['response'])
+
+  const settingModal = ref()
 
   function showSettingModal() {
     settingModal.value?.show()

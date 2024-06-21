@@ -1,6 +1,4 @@
 <script setup lang="ts">
-  import { onMounted, ref } from 'vue'
-  import { NModal, NSpace, NForm, NFormItem, NFlex, NPopover, NIcon, NSlider } from 'naive-ui'
   import { InformationCircleOutline } from '@vicons/ionicons5'
 
   const modalVisible = ref(false)
@@ -22,14 +20,16 @@
     localStorage.setItem('options', JSON.stringify(model.value))
   }
 
-  onMounted(() => {
+  function loadOptions() {
     const options = localStorage.getItem('options')
     if (!options) {
       saveOptions()
       return
     }
     model.value = JSON.parse(options)
-  })
+  }
+
+  onMounted(() => loadOptions())
 </script>
 
 <template>
