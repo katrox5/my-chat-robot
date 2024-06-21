@@ -7,28 +7,27 @@
 
   const emit = defineEmits(['response'])
   const props = defineProps({
+    id: Number,
     prompt: String,
-    answer: String,
   })
   const message = useMessage()
 
   const id = ref(-1)
   const output = ref('')
+  const loading = ref(true)
 
   function regen() {
-    if (id.value == -1) {
-      return
-    }
+    loading.value = true
     message.loading('重新生成回答...', { closable: true })
     output.value = ''
     request()
   }
 
   function request() {
-    const options = JSON.parse(localStorage.getItem('options') ?? '{}')
+    const options = getJsonValue('options', '{}')
     const temperature: number = (options['temperature'] ?? 70) / 100
     const penalty_score: number = ((options['penaltyScore'] ?? 0) + 100) / 100
-    const messages = JSON.parse(localStorage.getItem('messages') ?? '[]')
+    const messages = getJsonValue('messages', '[]')
 
     const prompt = id.value == -1 ? messages : messages.slice(0, id.value - 1)
     prompt.push({
@@ -48,7 +47,11 @@
       }),
     })
       .then(async (resp) => {
-        if (resp.body == null) return
+        if (!resp.body || resp.status != 200) {
+          message.error('请求异常')
+          output.value = '请重试'
+          return
+        }
         const reader = resp.body.getReader()
         const decoder = new TextDecoder()
 
@@ -64,19 +67,14 @@
           output.value += chunkText
         }
       })
-      .catch((err) => {
-        console.error('请求异常', err)
-        if (output.value == '') {
-          output.value = '请求异常，请重试'
-        } else {
-          message.error('请求异常')
-        }
-      })
+      .finally(() => (loading.value = false))
   }
 
   function save2Storage() {
-    const messages = JSON.parse(localStorage.getItem('messages') ?? '[]')
-    if (id.value == -1) {
+    const messages = getJsonValue('messages', '[]')
+    if (id.value >= 0) {
+      messages[id.value].content = output.value
+    } else {
       messages.push(
         {
           role: 'user',
@@ -88,15 +86,17 @@
         },
       )
       id.value = messages.length - 1
-    } else {
-      messages[id.value].content = output.value
     }
     localStorage.setItem('messages', JSON.stringify(messages))
   }
 
+  const getJsonValue = (key: string, def: string) => JSON.parse(localStorage.getItem(key) ?? def)
+
   onMounted(() => {
-    if (props.answer) {
-      output.value = props.answer
+    if (props.id) {
+      id.value = props.id
+      output.value = getJsonValue('messages', '[]')[props.id]['content']
+      loading.value = false
       return
     }
     request()
@@ -108,7 +108,7 @@
     <template #header>
       <div class="text-15px c-gray-5 pr-2" v-html="marked(props.prompt ?? '')" />
       <NFloatButton
-        v-if="id != -1"
+        v-if="!loading"
         @click="regen"
         top="5"
         right="5"

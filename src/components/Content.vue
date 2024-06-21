@@ -1,7 +1,7 @@
 <script setup lang="ts">
   interface Card {
+    id?: number
     prompt: string
-    answer?: string
   }
 
   const cards = ref<Card[]>([])
@@ -17,17 +17,20 @@
 
   function loadMessages() {
     const messages = JSON.parse(localStorage.getItem('messages') ?? '[]')
-    let prompt
-    for (const msg of messages) {
-      if (msg['role'] == 'user') {
-        prompt = msg['content']
-      } else if (msg['role'] == 'assistant' && prompt) {
-        cards.value.push({
-          prompt,
-          answer: msg['content'],
-        })
-        prompt = undefined
-      }
+    for (let i = 0; i < messages.length; i += 2) {
+      const prompt = messages[i]
+      const answer = messages[i + 1]
+      if (
+        prompt['role'] != 'user' ||
+        !prompt['content'] ||
+        answer?.['role'] != 'assistant' ||
+        !answer?.['content']
+      )
+        continue
+      cards.value.push({
+        id: i + 1,
+        prompt: prompt['content'],
+      })
     }
   }
 
@@ -36,7 +39,7 @@
 
 <template>
   <div class="last:mb-4" v-for="item in cards">
-    <Card :prompt="item.prompt" :answer="item.answer" @response="addPrompt" />
+    <Card :id="item.id" :prompt="item.prompt" @response="addPrompt" />
   </div>
   <Footer @response="addPrompt" />
 </template>
