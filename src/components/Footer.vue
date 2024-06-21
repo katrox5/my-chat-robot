@@ -28,28 +28,16 @@
 </script>
 
 <template>
-  <NFlex justify="space-between" :wrap="false">
+  <NFlex justify="space-between" :wrap="false" class="pt-4">
     <NInput
-      class="input"
-      type="textarea"
-      placeholder="请输入问题"
       ref="inputDom"
       @input="input"
       @keydown.enter="enter"
+      class="w-85% max-h-40px text-lg"
+      type="textarea"
+      placeholder="请输入问题"
       :autosize="{ maxRows: 5 }"
     />
-    <NButton @click="response" class="button">发送</NButton>
+    <NButton @click="response" class="h-40px text-lg">发送</NButton>
   </NFlex>
 </template>
-
-<style scoped>
-  .input {
-    width: 85%;
-    min-height: 40px;
-    font-size: large;
-  }
-  .button {
-    height: 40px;
-    font-size: large;
-  }
-</style>

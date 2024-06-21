@@ -107,9 +107,9 @@
 </script>
 
 <template>
-  <NCard style="overflow: hidden" :segmented="{ content: 'soft' }" hoverable>
+  <NCard class="of-hidden" :segmented="{ content: 'soft' }" hoverable>
     <template #header>
-      <div class="question" v-html="marked(props.prompt ?? '')" />
+      <div class="text-15px c-gray-5 pr-2" v-html="marked(props.prompt ?? '')" />
       <NFloatButton
         v-if="id != -1"
         @click="regen"
@@ -126,11 +126,3 @@
     <div v-else v-html="marked(output)" />
   </NCard>
 </template>
-
-<style scoped>
-  .question {
-    font-size: 15px;
-    color: gray;
-    padding-right: 8px;
-  }
-</style>

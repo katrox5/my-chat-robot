@@ -39,7 +39,7 @@
     @after-leave="saveOptions"
     v-model:show="modalVisible"
     :auto-focus="false"
-    style="width: 450px; padding: 0 10px"
+    class="w-450px px-10px"
   >
     <NSpace vertical>
       <NForm :model="model" label-placement="left" label-width="100px">

@@ -20,7 +20,7 @@
 </script>
 
 <template>
-  <div style="max-width: 70ch; margin: 0 auto; padding: 6rem 2rem 4rem">
+  <div class="max-w-70ch mx-a pt-24 pb-16 px-8">
     <NMessageProvider>
       <Header @response="cleanMessages" />
       <Content ref="contentRef" />

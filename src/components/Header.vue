@@ -23,11 +23,11 @@
 </script>
 
 <template>
-  <NGrid y-gap="3" cols="1" style="margin-bottom: 1rem">
+  <NGrid y-gap="3" cols="1" class="mb-4">
     <NGridItem>
       <NFlex justify="space-between" align="center" :wrap="false">
         <NImage
-          style="border-radius: 4px"
+          class="b-rd-4px"
           height="64px"
           width="64px"
           src="static/avatar.jpg"
@@ -42,7 +42,7 @@
     </NGridItem>
     <NGridItem>
       <NGradientText
-        class="title"
+        class="text-2xl font-bold"
         :gradient="{
           from: 'rgb(130, 112, 255)',
           to: 'rgb(189, 255, 254)',
@@ -52,7 +52,7 @@
         Katrox'&nbsp;
       </NGradientText>
       <NGradientText
-        class="title"
+        class="text-2xl font-bold"
         :gradient="{
           from: 'rgb(89, 184, 237)',
           to: 'rgb(50, 146, 109)',
@@ -64,7 +64,7 @@
     </NGridItem>
     <NGridItem>
       <NFlex justify="space-between" align="center" :wrap="false">
-        <div class="subtitle">基于模型 (ERNIE-Speed-128K).</div>
+        <div class="text-base c-gray">基于模型 (ERNIE-Speed-128K).</div>
         <NPopconfirm
           placement="left"
           positive-text="确认"
@@ -85,14 +85,3 @@
   </NGrid>
   <Setting ref="settingModal" />
 </template>
-
-<style scoped>
-  .title {
-    font-size: 1.5rem;
-    font-weight: 800;
-  }
-  .subtitle {
-    font-size: 1rem;
-    color: gray;
-  }
-</style>

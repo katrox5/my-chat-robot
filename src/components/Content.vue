@@ -38,10 +38,8 @@
 </script>
 
 <template>
-  <div style="margin-bottom: 2rem">
-    <template v-for="item in cards">
-      <Card :prompt="item.prompt" :answer="item.answer" @response="addPrompt" />
-    </template>
+  <div class="mb-4" v-for="item in cards">
+    <Card :prompt="item.prompt" :answer="item.answer" @response="addPrompt" />
   </div>
   <Footer @response="addPrompt" />
 </template>
