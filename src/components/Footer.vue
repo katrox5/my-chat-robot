@@ -32,7 +32,7 @@
       ref="inputRef"
       @input="input"
       @keydown.enter="enter"
-      class="w-85% max-h-40px text-lg"
+      class="w-85% min-h-40px text-lg"
       type="textarea"
       placeholder="请输入问题"
       :autosize="{ maxRows: 5 }"
