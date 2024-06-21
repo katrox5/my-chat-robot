@@ -35,7 +35,7 @@
 </script>
 
 <template>
-  <div class="mb-4" v-for="item in cards">
+  <div class="last:mb-4" v-for="item in cards">
     <Card :prompt="item.prompt" :answer="item.answer" @response="addPrompt" />
   </div>
   <Footer @response="addPrompt" />
