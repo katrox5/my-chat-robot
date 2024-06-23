@@ -6,6 +6,7 @@
     (e: 'response'): void
   }>()
 
+  const setting = defineAsyncComponent(() => import('./Setting.vue'))
   const settingRef = ref<InstanceType<typeof Setting>>()
 
   function showSettingModal() {
@@ -74,5 +75,7 @@
       </n-flex>
     </n-grid-item>
   </n-grid>
-  <Setting ref="settingRef" />
+  <teleport to="#app">
+    <setting ref="settingRef" />
+  </teleport>
 </template>

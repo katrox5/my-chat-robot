@@ -8,7 +8,7 @@
     contentRef.value?.clearMessages()
   }
 
-  function scrollToBottom() {
+  function scroll2Bottom() {
     window.scrollTo({
       top: document.body.scrollHeight,
       behavior: 'smooth',
@@ -21,7 +21,7 @@
     <n-message-provider>
       <Header @response="clearMessages" class="mb-4" />
       <Content ref="contentRef" />
-      <n-float-button @click="scrollToBottom" top="20" right="20" shape="square">
+      <n-float-button @click="scroll2Bottom" top="20" right="20" shape="square">
         <n-icon><arrow-down /></n-icon>
       </n-float-button>
     </n-message-provider>

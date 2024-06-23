@@ -1,13 +1,13 @@
 <script setup lang="ts">
   import { InformationCircleOutline } from '@vicons/ionicons5'
 
-  const modalVisible = ref(false)
-
   defineExpose({
     show() {
       modalVisible.value = true
     },
   })
+
+  const modalVisible = ref(false)
 
   const model = ref({
     temperature: 70,
