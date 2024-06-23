@@ -14,25 +14,25 @@
 </script>
 
 <template>
-  <NGrid y-gap="3" cols="1" v-bind="$attrs">
-    <NGridItem>
-      <NFlex justify="space-between" align="center" :wrap="false">
-        <NImage
+  <n-grid y-gap="3" cols="1" v-bind="$attrs">
+    <n-grid-item>
+      <n-flex justify="space-between" align="center" :wrap="false">
+        <n-image
           class="b-rd-4px"
           width="64px"
           height="64px"
           src="static/avatar.jpg"
           preview-disabled
         />
-        <NButton @click="showSettingModal">
+        <n-button @click="showSettingModal">
           <template #icon>
-            <NIcon><SettingsOutline /></NIcon>
+            <n-icon><settings-outline /></n-icon>
           </template>
-        </NButton>
-      </NFlex>
-    </NGridItem>
-    <NGridItem>
-      <NGradientText
+        </n-button>
+      </n-flex>
+    </n-grid-item>
+    <n-grid-item>
+      <n-gradient-text
         class="text-2xl font-bold"
         :gradient="{
           from: 'rgb(130, 112, 255)',
@@ -41,8 +41,8 @@
         }"
       >
         Katrox'&nbsp;
-      </NGradientText>
-      <NGradientText
+      </n-gradient-text>
+      <n-gradient-text
         class="text-2xl font-bold"
         :gradient="{
           from: 'rgb(89, 184, 237)',
@@ -51,28 +51,28 @@
         }"
       >
         Chat Robot
-      </NGradientText>
-    </NGridItem>
-    <NGridItem>
-      <NFlex justify="space-between" align="center" :wrap="false">
+      </n-gradient-text>
+    </n-grid-item>
+    <n-grid-item>
+      <n-flex justify="space-between" align="center" :wrap="false">
         <div class="text-base c-gray">基于模型 (ERNIE-Speed-128K).</div>
-        <NPopconfirm
+        <n-popconfirm
           placement="left"
           positive-text="确认"
           negative-text="取消"
           @positive-click="emit('response')"
         >
           <template #trigger>
-            <NButton quaternary>
+            <n-button quaternary>
               <template #icon>
-                <NIcon><TrashBinOutline /></NIcon>
+                <n-icon><trash-bin-outline /></n-icon>
               </template>
-            </NButton>
+            </n-button>
           </template>
           <span>该操作将清除所有记录</span>
-        </NPopconfirm>
-      </NFlex>
-    </NGridItem>
-  </NGrid>
+        </n-popconfirm>
+      </n-flex>
+    </n-grid-item>
+  </n-grid>
   <Setting ref="settingRef" />
 </template>

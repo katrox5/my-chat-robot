@@ -26,8 +26,8 @@
 </script>
 
 <template>
-  <NFlex justify="space-between" :wrap="false">
-    <NInput
+  <n-flex justify="space-between" :wrap="false">
+    <n-input
       @keydown.enter="enter"
       v-model:value="prompt"
       :autosize="{ maxRows: 5 }"
@@ -35,6 +35,6 @@
       type="textarea"
       placeholder="请输入问题"
     />
-    <NButton @click="request" class="h-40px text-lg">发送</NButton>
-  </NFlex>
+    <n-button @click="request" class="h-40px text-lg">发送</n-button>
+  </n-flex>
 </template>

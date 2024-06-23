@@ -6,14 +6,17 @@
   import 'highlight.js/styles/a11y-light.css'
 
   const props = defineProps<{
-    id?: number
     prompt: string
+    answer?: string
+    id?: number
   }>()
   const message = useMessage()
 
   const id = ref(-1)
   const output = ref('')
   const loading = ref(true)
+
+  const getJsonValue = (key: string, def: string) => JSON.parse(localStorage.getItem(key) ?? def)
 
   function regen() {
     loading.value = true
@@ -89,12 +92,10 @@
     localStorage.setItem('messages', JSON.stringify(messages))
   }
 
-  const getJsonValue = (key: string, def: string) => JSON.parse(localStorage.getItem(key) ?? def)
-
   onMounted(() => {
-    if (props.id) {
+    if (props.id && props.answer) {
       id.value = props.id
-      output.value = getJsonValue('messages', '[]')[props.id]['content']
+      output.value = props.answer
       loading.value = false
       return
     }
@@ -103,10 +104,10 @@
 </script>
 
 <template>
-  <NCard class="of-hidden" :segmented="{ content: 'soft' }" hoverable>
+  <n-card class="of-hidden" :segmented="{ content: 'soft' }" hoverable>
     <template #header>
       <div class="text-15px c-gray-5 pr-2" v-html="marked(props.prompt ?? '')" />
-      <NFloatButton
+      <n-float-button
         v-if="!loading"
         @click="regen"
         top="5"
@@ -115,10 +116,10 @@
         height="30"
         position="absolute"
       >
-        <NIcon><Reload /></NIcon>
-      </NFloatButton>
+        <n-icon><reload /></n-icon>
+      </n-float-button>
     </template>
-    <NSkeleton v-if="output == ''" :repeat="2" text />
+    <n-skeleton v-if="output == ''" :repeat="2" text />
     <div v-else v-html="marked(output)" />
-  </NCard>
+  </n-card>
 </template>

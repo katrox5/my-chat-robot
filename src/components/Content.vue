@@ -1,7 +1,8 @@
 <script setup lang="ts">
   interface Card {
-    id?: number
     prompt: string
+    answer?: string
+    id?: number
   }
 
   defineExpose({
@@ -30,6 +31,7 @@
       cards.value.push({
         id: i + 1,
         prompt: prompt['content'],
+        answer: answer['content'],
       })
     }
   }
@@ -38,8 +40,8 @@
 </script>
 
 <template>
-  <div class="last:mb-4" v-for="item in cards">
-    <Card :id="item.id" :prompt="item.prompt" />
+  <div class="last:mb-4" v-for="{ prompt, answer, id } in cards">
+    <Card :prompt="prompt" :answer="answer" :id="id" />
   </div>
   <Footer @request="addPrompt" class="mt-4" />
 </template>

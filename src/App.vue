@@ -18,12 +18,12 @@
 
 <template>
   <div class="max-w-70ch mx-a pt-24 pb-16 px-8">
-    <NMessageProvider>
+    <n-message-provider>
       <Header @response="clearMessages" class="mb-4" />
       <Content ref="contentRef" />
-      <NFloatButton @click="scrollToBottom" top="20" right="20" shape="square">
-        <NIcon><ArrowDown /></NIcon>
-      </NFloatButton>
-    </NMessageProvider>
+      <n-float-button @click="scrollToBottom" top="20" right="20" shape="square">
+        <n-icon><arrow-down /></n-icon>
+      </n-float-button>
+    </n-message-provider>
   </div>
 </template>
