@@ -1,42 +1,40 @@
 <script setup lang="ts">
   import { useMessage } from 'naive-ui'
 
-  const emit = defineEmits(['response'])
+  const emit = defineEmits<{
+    request: [prompt: string]
+  }>()
   const message = useMessage()
 
-  const inputRef = ref()
   const prompt = ref('')
-
-  const input = (value: string) => (prompt.value = value)
 
   const enter = (event: KeyboardEvent) => {
     if (!event.shiftKey) {
       event.preventDefault()
-      response()
+      request()
     }
   }
 
-  async function response() {
+  async function request() {
     if (prompt.value.trim() == '') {
       message.warning('问题不能为空')
       return
     }
-    emit('response', prompt.value.trim())
-    inputRef.value?.clear()
+    emit('request', prompt.value.trim())
+    prompt.value = ''
   }
 </script>
 
 <template>
-  <NFlex justify="space-between" :wrap="false" class="pt-4">
+  <NFlex justify="space-between" :wrap="false">
     <NInput
-      ref="inputRef"
-      @input="input"
       @keydown.enter="enter"
+      v-model:value="prompt"
+      :autosize="{ maxRows: 5 }"
       class="w-85% min-h-40px text-lg"
       type="textarea"
       placeholder="请输入问题"
-      :autosize="{ maxRows: 5 }"
     />
-    <NButton @click="response" class="h-40px text-lg">发送</NButton>
+    <NButton @click="request" class="h-40px text-lg">发送</NButton>
   </NFlex>
 </template>

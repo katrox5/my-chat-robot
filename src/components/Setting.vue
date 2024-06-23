@@ -36,10 +36,10 @@
   <NModal
     title="设置"
     preset="card"
+    class="w-450px px-10px"
     @after-leave="saveOptions"
     v-model:show="modalVisible"
     :auto-focus="false"
-    class="w-450px px-10px"
   >
     <NSpace vertical>
       <NForm :model="model" label-placement="left" label-width="100px">

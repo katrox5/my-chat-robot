@@ -1,10 +1,11 @@
 <script setup lang="ts">
   import { ArrowDown } from '@vicons/ionicons5'
+  import type Content from './components/Content.vue'
 
-  const contentRef = ref()
+  const contentRef = ref<InstanceType<typeof Content>>()
 
-  function cleanMessages() {
-    contentRef.value?.cleanMessages()
+  function clearMessages() {
+    contentRef.value?.clearMessages()
   }
 
   function scrollToBottom() {
@@ -18,7 +19,7 @@
 <template>
   <div class="max-w-70ch mx-a pt-24 pb-16 px-8">
     <NMessageProvider>
-      <Header @response="cleanMessages" />
+      <Header @response="clearMessages" class="mb-4" />
       <Content ref="contentRef" />
       <NFloatButton @click="scrollToBottom" top="20" right="20" shape="square">
         <NIcon><ArrowDown /></NIcon>

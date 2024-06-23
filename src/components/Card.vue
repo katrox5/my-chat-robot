@@ -5,11 +5,10 @@
   import hljs from 'highlight.js'
   import 'highlight.js/styles/a11y-light.css'
 
-  const emit = defineEmits(['response'])
-  const props = defineProps({
-    id: Number,
-    prompt: String,
-  })
+  const props = defineProps<{
+    id?: number
+    prompt: string
+  }>()
   const message = useMessage()
 
   const id = ref(-1)
@@ -119,7 +118,7 @@
         <NIcon><Reload /></NIcon>
       </NFloatButton>
     </template>
-    <NSkeleton v-if="output == ''" text :repeat="2" />
+    <NSkeleton v-if="output == ''" :repeat="2" text />
     <div v-else v-html="marked(output)" />
   </NCard>
 </template>

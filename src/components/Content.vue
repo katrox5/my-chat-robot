@@ -4,14 +4,14 @@
     prompt: string
   }
 
-  const cards = ref<Card[]>([])
-
   defineExpose({
-    cleanMessages() {
+    clearMessages() {
       localStorage.removeItem('messages')
       cards.value = []
     },
   })
+
+  const cards = ref<Card[]>([])
 
   const addPrompt = (prompt: string) => cards.value.push({ prompt })
 
@@ -39,7 +39,7 @@
 
 <template>
   <div class="last:mb-4" v-for="item in cards">
-    <Card :id="item.id" :prompt="item.prompt" @response="addPrompt" />
+    <Card :id="item.id" :prompt="item.prompt" />
   </div>
-  <Footer @response="addPrompt" />
+  <Footer @request="addPrompt" class="mt-4" />
 </template>

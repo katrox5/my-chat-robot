@@ -1,23 +1,26 @@
 <script setup lang="ts">
   import { SettingsOutline, TrashBinOutline } from '@vicons/ionicons5'
+  import type Setting from './Setting.vue'
 
-  const emit = defineEmits(['response'])
+  const emit = defineEmits<{
+    (e: 'response'): void
+  }>()
 
-  const settingModal = ref()
+  const settingRef = ref<InstanceType<typeof Setting>>()
 
   function showSettingModal() {
-    settingModal.value?.show()
+    settingRef.value?.show()
   }
 </script>
 
 <template>
-  <NGrid y-gap="3" cols="1" class="mb-4">
+  <NGrid y-gap="3" cols="1" v-bind="$attrs">
     <NGridItem>
       <NFlex justify="space-between" align="center" :wrap="false">
         <NImage
           class="b-rd-4px"
-          height="64px"
           width="64px"
+          height="64px"
           src="static/avatar.jpg"
           preview-disabled
         />
@@ -56,8 +59,8 @@
         <NPopconfirm
           placement="left"
           positive-text="确认"
-          @positive-click="emit('response')"
           negative-text="取消"
+          @positive-click="emit('response')"
         >
           <template #trigger>
             <NButton quaternary>
@@ -71,5 +74,5 @@
       </NFlex>
     </NGridItem>
   </NGrid>
-  <Setting ref="settingModal" />
+  <Setting ref="settingRef" />
 </template>
