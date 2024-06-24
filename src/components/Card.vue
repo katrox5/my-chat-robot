@@ -3,7 +3,20 @@
   import { Reload } from '@vicons/ionicons5'
   import { useMessage } from 'naive-ui'
   import hljs from 'highlight.js'
-  import 'highlight.js/styles/a11y-light.css'
+  import 'highlight.js/styles/github-dark-dimmed.css'
+
+  const vHighlight = {
+    mounted: (el: Element) => {
+      el.querySelectorAll('pre code').forEach((block) =>
+        hljs.highlightElement(block as HTMLElement),
+      )
+    },
+    updated: (el: Element) => {
+      el.querySelectorAll('pre code').forEach((block) =>
+        hljs.highlightElement(block as HTMLElement),
+      )
+    },
+  }
 
   const props = defineProps<{
     prompt: string
@@ -37,7 +50,7 @@
       content: props.prompt,
     })
 
-    fetch('/prompt', {
+    fetch('http://localhost:5000/prompt', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -60,8 +73,6 @@
         while (true) {
           const { done, value } = await reader.read()
           if (done) {
-            const blocks = document.querySelectorAll('pre code')
-            blocks.forEach((block) => hljs.highlightElement(block as HTMLElement))
             save2Storage()
             break
           }
@@ -120,6 +131,6 @@
       </n-float-button>
     </template>
     <n-skeleton v-if="output == ''" :repeat="2" text />
-    <div v-else v-html="marked(output)" />
+    <div v-else v-highlight v-html="marked(output)" />
   </n-card>
 </template>
