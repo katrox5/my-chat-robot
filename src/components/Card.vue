@@ -115,9 +115,9 @@
 </script>
 
 <template>
-  <n-card class="of-hidden" :segmented="{ content: 'soft' }" hoverable>
+  <n-card :segmented="{ content: 'soft' }" hoverable>
     <template #header>
-      <div class="text-15px c-gray-5 pr-2" v-html="marked(props.prompt ?? '')" />
+      <div class="text-15px c-gray-4 pr-2" v-html="marked(props.prompt ?? '')" />
       <n-float-button
         v-if="!loading"
         @click="regen"
@@ -134,3 +134,9 @@
     <div v-else v-highlight v-html="marked(output)" />
   </n-card>
 </template>
+
+<style>
+  .hljs {
+    border-radius: 5px;
+  }
+</style>

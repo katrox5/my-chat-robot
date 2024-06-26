@@ -36,7 +36,7 @@
   <n-modal
     title="设置"
     preset="card"
-    class="w-450px px-10px"
+    class="w-450px pr-10px"
     @after-leave="saveOptions"
     v-model:show="modalVisible"
     :auto-focus="false"
