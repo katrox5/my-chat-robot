@@ -50,7 +50,7 @@
       content: props.prompt,
     })
 
-    fetch('http://localhost:5000/prompt', {
+    fetch('/prompt', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

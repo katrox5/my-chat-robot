@@ -19,6 +19,7 @@ export default defineConfig({
     }),
     Components({
       resolvers: [NaiveUiResolver()],
+      dts: './components.d.ts',
     }),
   ],
   server: {
